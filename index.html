@@ -139,9 +139,18 @@
     .nav ul{display:none}
     .hero .wrap{grid-template-columns:1fr;padding-top:40px}
     .stage{height:560px}.stage img{width:240px}.stage .a{left:4%}.stage .b{right:4%}
-    .row{grid-template-columns:1fr;gap:36px}.row.flip .shot{order:0}
+    .row{grid-template-columns:minmax(0,1fr);gap:36px}.row.flip .shot{order:0}
+    .shot{max-width:100%}.shot .frame{padding:24px;max-width:100%}.shot .frame img{width:100%;max-width:280px}
     .steps,.grid{grid-template-columns:1fr}
     section{padding:64px 0}
+  }
+  @media(max-width:480px){
+    .wrap{padding:0 20px}
+    .shot .frame{padding:18px;border-radius:32px}
+    .shot .frame img{border-radius:30px}
+    .final{padding:48px 20px;border-radius:32px}
+    .step{padding:24px}
+    h2{font-size:1.9rem}
   }
 </style>
 </head>
