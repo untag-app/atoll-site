@@ -48,7 +48,7 @@
   /* notify form */
   .notify{width:100%;max-width:440px}
   .notify .row{display:flex;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px;box-shadow:0 10px 24px -14px rgba(7,47,64,.4)}
-  .notify input[type=email]{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:1rem;padding:8px 14px;color:var(--ink);outline:none}
+  .notify input[type=email]{flex:1;width:0;min-width:0;border:0;background:transparent;font:inherit;font-size:1rem;padding:8px 14px;color:var(--ink);outline:none}
   .notify .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
   .notify .btn{white-space:nowrap;cursor:pointer;font-family:inherit}
   .notify .msg{margin:10px 14px 0;font-size:.88rem;color:var(--muted)}
@@ -166,7 +166,9 @@
   footer a{text-decoration:none} footer a:hover{color:var(--teal)}
   @media(max-width:900px){
     .nav ul{display:none}
-    .hero .wrap{grid-template-columns:1fr;padding-top:40px}
+    .hero .wrap{grid-template-columns:minmax(0,1fr);padding-top:40px}
+    .cta{flex-direction:column;align-items:flex-start}
+    .stage{width:100%;max-width:560px;margin:0 auto}
     .stage{height:560px}.stage img{width:240px}.stage .a{left:4%}.stage .b{right:4%}
     .row{grid-template-columns:minmax(0,1fr);gap:36px}.row.flip .shot{order:0}
     .shot{max-width:100%}.shot .frame{padding:24px;max-width:100%}.shot .frame img{width:100%;max-width:280px}
