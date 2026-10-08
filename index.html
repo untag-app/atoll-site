@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.className+=" js"</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atoll · Your transit card is now your phone lock</title>
 <meta name="description" content="Atoll keeps distracting apps locked during the hours you pick. Tap a transit card you already carry for a 15-minute break, then it locks itself again. Coming soon to iPhone.">
@@ -100,10 +101,38 @@
   ul.ticks li::before{content:"";flex:0 0 22px;height:22px;border-radius:50%;background:var(--mist-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b7fa3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/14px no-repeat;margin-top:2px}
   ul.ticks b{color:var(--ink)}
   .shot{flex-direction:column;align-items:center;gap:22px}
-  .shot .frame img[hidden]{display:none}
   .seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px;box-shadow:0 10px 24px -16px rgba(7,47,64,.4)}
   .seg button{border:0;background:transparent;font:inherit;font-weight:600;font-size:.92rem;color:var(--ink-2);padding:8px 20px;border-radius:999px;cursor:pointer}
   .seg button[aria-selected=true]{background:var(--ink);color:#fff}
+  /* motion */
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes floaty{0%,100%{translate:0 0}50%{translate:0 -10px}}
+  .hero .wrap>div:first-child{animation:rise .8s ease both}
+  .stage .a{animation:floaty 7s ease-in-out infinite}
+  .stage .b{animation:floaty 7s ease-in-out -3.5s infinite}
+  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0s)}
+  .js .reveal.in{opacity:1;transform:none}
+  .card,.step{transition:transform .25s ease,box-shadow .25s ease}
+  .card:hover,.step:hover{transform:translateY(-4px);box-shadow:0 18px 36px -22px rgba(7,47,64,.5)}
+  /* 통계 탭: 겹쳐 놓고 서서히 바꾼다 */
+  .shot .frame.stack{display:grid;justify-items:center}
+  .shot .frame.stack img{grid-area:1/1;opacity:0;transition:opacity .4s ease;pointer-events:none}
+  .shot .frame.stack img.on{opacity:1}
+  .seg-wrap{display:none;flex-direction:column;align-items:center;gap:8px}
+  .js .seg-wrap{display:flex}
+  .seg-hint{font-size:.82rem;color:var(--muted);transition:opacity .4s ease}
+  .seg-wrap.used .seg-hint{opacity:0}
+  .seg{position:relative}
+  .seg button{position:relative;z-index:1;transition:color .25s ease}
+  .js .seg button[aria-selected=true]{background:transparent;color:#fff}
+  .seg-pill{position:absolute;top:4px;left:0;height:calc(100% - 8px);width:0;border-radius:999px;background:var(--ink)}
+  .seg-pill.ready{transition:transform .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1)}
+  @media(prefers-reduced-motion:reduce){
+    .hero .wrap>div:first-child,.stage .a,.stage .b{animation:none}
+    .js .reveal{opacity:1;transform:none;transition:none}
+    .card,.step,.seg-pill,.shot .frame.stack img,.seg button{transition:none}
+    .card:hover,.step:hover{transform:none}
+  }
   /* how */
   .how{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .head{text-align:center;margin-bottom:48px}
@@ -232,15 +261,19 @@
     </ul>
   </div>
   <div class="shot">
-    <div class="frame">
-      <img id="stats-week" src="img/stats-week.webp" width="804" height="1748" alt="Weekly stats: focus time this week and a 24-hour bar for each day" loading="lazy">
-      <img id="stats-month" src="img/stats-month.webp" width="804" height="1748" alt="Monthly stats: focus time this month and a day-by-day grid" loading="lazy" hidden>
-      <img id="stats-year" src="img/stats-year.webp" width="804" height="1748" alt="Yearly stats: focus time this year and a grid for every month" loading="lazy" hidden>
+    <div class="seg-wrap">
+      <div class="seg" role="tablist" aria-label="Stats range">
+        <span class="seg-pill" aria-hidden="true"></span>
+        <button type="button" role="tab" aria-selected="true" aria-controls="stats-week" data-target="stats-week">Week</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="stats-month" data-target="stats-month" tabindex="-1">Month</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="stats-year" data-target="stats-year" tabindex="-1">Year</button>
+      </div>
+      <span class="seg-hint">Tap to switch views</span>
     </div>
-    <div class="seg" role="tablist" aria-label="Stats range">
-      <button type="button" role="tab" aria-selected="true" aria-controls="stats-week" data-target="stats-week">Week</button>
-      <button type="button" role="tab" aria-selected="false" aria-controls="stats-month" data-target="stats-month" tabindex="-1">Month</button>
-      <button type="button" role="tab" aria-selected="false" aria-controls="stats-year" data-target="stats-year" tabindex="-1">Year</button>
+    <div class="frame stack">
+      <img id="stats-week" class="on" src="img/stats-week.webp" width="804" height="1748" alt="Weekly stats: focus time this week and a 24-hour bar for each day">
+      <img id="stats-month" src="img/stats-month.webp" width="804" height="1748" alt="Monthly stats: focus time this month and a day-by-day grid" loading="lazy">
+      <img id="stats-year" src="img/stats-year.webp" width="804" height="1748" alt="Yearly stats: focus time this year and a grid for every month" loading="lazy">
     </div>
   </div>
 </div></section>
@@ -310,23 +343,56 @@
   });
   var seg=document.querySelector(".seg");
   if(seg){
+    var wrap=seg.parentNode, pill=seg.querySelector(".seg-pill");
     var tabs=[].slice.call(seg.querySelectorAll("button"));
-    var pick=function(b){
-      tabs.forEach(function(t){
-        var on=t===b;
+    var current=0, timer=null, stopped=false;
+    var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var place=function(){var b=tabs[current];pill.style.width=b.offsetWidth+"px";pill.style.transform="translateX("+b.offsetLeft+"px)"};
+    var pick=function(i){
+      current=i;
+      tabs.forEach(function(t,k){
+        var on=k===i;
         t.setAttribute("aria-selected",on);t.tabIndex=on?0:-1;
-        document.getElementById(t.dataset.target).hidden=!on;
+        document.getElementById(t.dataset.target).classList.toggle("on",on);
       });
+      place();
     };
+    var stop=function(){stopped=true;clearInterval(timer);timer=null;wrap.classList.add("used")};
     tabs.forEach(function(b,i){
-      b.addEventListener("click",function(){pick(b)});
+      b.addEventListener("click",function(){stop();pick(i)});
       b.addEventListener("keydown",function(e){
         var n=e.key==="ArrowRight"?i+1:e.key==="ArrowLeft"?i-1:-1;
         if(n<0||n>=tabs.length)return;
-        e.preventDefault();pick(tabs[n]);tabs[n].focus();
+        e.preventDefault();stop();pick(n);tabs[n].focus();
       });
     });
+    window.addEventListener("resize",place);
+    window.addEventListener("load",place);
+    place();
+    requestAnimationFrame(function(){requestAnimationFrame(function(){pill.classList.add("ready")})});
+    // 화면에 들어오면 Week → Month → Year 순으로 보여 준다. 한 번 누르면 멈춘다.
+    if("IntersectionObserver" in window&&!reduce){
+      new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(stopped)return;
+          if(e.isIntersecting&&!timer){timer=setInterval(function(){pick((current+1)%tabs.length)},3500)}
+          else if(!e.isIntersecting&&timer){clearInterval(timer);timer=null}
+        });
+      },{threshold:0.5}).observe(seg.parentNode.parentNode.querySelector(".frame"));
+    }
   }
+  // 스크롤하면 부드럽게 나타난다
+  var targets=[].slice.call(document.querySelectorAll(".head,.row>div,.step,.card,details,.final"));
+  targets.forEach(function(el,i){el.classList.add("reveal")});
+  [].slice.call(document.querySelectorAll(".steps,.grid")).forEach(function(g){
+    [].slice.call(g.children).forEach(function(c,i){c.style.setProperty("--d",(i*0.08)+"s")});
+  });
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}});
+    },{threshold:0.12});
+    targets.forEach(function(el){io.observe(el)});
+  }else{targets.forEach(function(el){el.classList.add("in")})}
 })();
 </script>
 <!-- Cloudflare Web Analytics -->
