@@ -3,116 +3,218 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Atoll · Lock your phone, on purpose</title>
-<meta name="description" content="Atoll is an iOS app that blocks distracting apps and websites on a schedule, and unlocks only when you choose to, with a long hold or an NFC card you own.">
-<meta property="og:title" content="Atoll">
-<meta property="og:description" content="Block distracting apps and websites on a schedule. Unlock with a long hold or an NFC card.">
+<title>Atoll · Focus that holds</title>
+<meta name="description" content="Atoll is an iPhone app that blocks distracting apps and websites on your schedule. Unlock with a deliberate hold, or with an NFC card you already own.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Atoll · Focus that holds">
+<meta property="og:description" content="Block distracting apps and websites on a schedule. Unlock on purpose.">
 <meta property="og:image" content="https://tryatoll.app/img/home-unlocked.png">
+<meta name="theme-color" content="#072f40">
 <style>
   :root {
-    --bg: #f3fafc; --ink: #0a2a3a; --muted: #4f6b78; --teal: #0b7fa3; --teal-soft: #bfe9f4;
-    --card: #ffffff; --line: #d6e8ee; --dark: #072f40;
+    --ink:#072f40; --ink-2:#2f5566; --muted:#58798a; --teal:#0b7fa3; --teal-2:#00b4d8; --mist:#e9f7fb; --mist-2:#cfeef7;
+    --white:#fff; --line:rgba(7,47,64,.10); --dark:#06232f;
+    --r:28px; --shadow:0 30px 70px -28px rgba(7,47,64,.45);
   }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  a { color: var(--teal); }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
-  header.nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
-  .logo { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
-  .nav a.link { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: .95rem; }
-  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding: 40px 0 72px; }
-  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.08; letter-spacing: -0.03em; margin: 0 0 18px; }
-  .hero p.lead { font-size: 1.2rem; color: var(--muted); margin: 0 0 28px; max-width: 30rem; }
-  .badge { display: inline-block; background: var(--dark); color: #fff; padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: 1rem; }
-  .badge small { opacity: .7; font-weight: 400; margin-left: 6px; }
-  .phone { display: block; width: 100%; max-width: 320px; margin: 0 auto; border-radius: 40px; box-shadow: 0 30px 60px -20px rgba(7,47,64,.35); border: 1px solid var(--line); }
-  section { padding: 56px 0; }
-  h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.02em; margin: 0 0 12px; }
-  .sub { color: var(--muted); max-width: 36rem; margin: 0 0 36px; }
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .step, .feat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
-  .step .n { width: 32px; height: 32px; border-radius: 50%; background: var(--teal-soft); color: var(--teal); font-weight: 700; display: grid; place-items: center; margin-bottom: 12px; }
-  .step h3, .feat h3 { margin: 0 0 6px; font-size: 1.1rem; }
-  .step p, .feat p { margin: 0; color: var(--muted); font-size: .98rem; }
-  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .shots { display: flex; gap: 20px; overflow-x: auto; padding: 8px 4px 24px; scroll-snap-type: x mandatory; }
-  .shots figure { margin: 0; flex: 0 0 230px; scroll-snap-align: start; text-align: center; }
-  .shots img { width: 100%; border-radius: 28px; border: 1px solid var(--line); box-shadow: 0 16px 36px -16px rgba(7,47,64,.3); }
-  .shots figcaption { margin-top: 10px; font-size: .9rem; color: var(--muted); }
-  .band { background: var(--dark); color: #e8f6fb; border-radius: 28px; padding: 40px; }
-  .band h2 { color: #fff; } .band p { color: #a9cddb; margin: 0; max-width: 38rem; }
-  footer { padding: 40px 0 56px; color: var(--muted); font-size: .92rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  @media (max-width: 800px) {
-    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 16px; }
-    .hero p.lead { margin-left: auto; margin-right: auto; }
-    .steps, .features { grid-template-columns: 1fr; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;color:var(--ink);background:#f6fcfe;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  /* nav */
+  .nav{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(14px);background:rgba(246,252,254,.78);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem;letter-spacing:-.01em;text-decoration:none}
+  .mark{width:28px;height:28px;border-radius:9px;background:conic-gradient(from 210deg,var(--teal),var(--teal-2),var(--mist-2),var(--teal));position:relative}
+  .mark::after{content:"";position:absolute;inset:8px;border-radius:50%;background:#f6fcfe}
+  .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+  .nav ul a{text-decoration:none;color:var(--ink-2);font-size:.95rem}
+  .nav ul a:hover{color:var(--teal)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1px solid transparent;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.primary{background:var(--ink);color:#fff;box-shadow:0 10px 24px -10px rgba(7,47,64,.6)}
+  .btn.ghost{background:rgba(255,255,255,.7);border-color:var(--line);color:var(--ink)}
+  .btn.small{padding:9px 18px;font-size:.9rem}
+  /* hero */
+  .hero{position:relative;overflow:hidden;background:
+    radial-gradient(1100px 520px at 78% -8%,#bfeaf6 0%,rgba(191,234,246,0) 60%),
+    radial-gradient(800px 480px at 0% 20%,#dff5fb 0%,rgba(223,245,251,0) 65%),#f6fcfe}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center;padding-top:72px;padding-bottom:96px}
+  .pill{display:inline-flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.85rem;color:var(--ink-2);margin-bottom:22px}
+  .pill i{width:8px;height:8px;border-radius:50%;background:var(--teal-2);display:inline-block}
+  h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.035em;margin:0 0 20px}
+  h1 em{font-style:normal;background:linear-gradient(90deg,var(--teal),var(--teal-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{font-size:1.28rem;color:var(--ink-2);max-width:32rem;margin:0 0 32px}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .note{margin-top:16px;color:var(--muted);font-size:.9rem}
+  .stage{position:relative;height:640px}
+  .stage img{position:absolute;width:290px;border-radius:44px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.6)}
+  .stage .a{left:6%;top:40px;transform:rotate(-4deg)}
+  .stage .b{right:2%;top:0;transform:rotate(4deg)}
+  /* sections */
+  section{padding:96px 0}
+  .eyebrow{color:var(--teal);font-weight:700;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+  h2{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;line-height:1.08;margin:0 0 16px}
+  p.sub{color:var(--ink-2);font-size:1.12rem;max-width:34rem;margin:0}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+  .row.flip .shot{order:-1}
+  .shot{display:flex;justify-content:center}
+  .shot .frame{position:relative;padding:40px;border-radius:40px;background:linear-gradient(160deg,var(--mist-2),#f2fbfe)}
+  .shot .frame img{display:block;width:280px;border-radius:38px;box-shadow:var(--shadow)}
+  .shot .frame.dark{background:linear-gradient(160deg,#0f4a61,#06232f)}
+  ul.ticks{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px}
+  ul.ticks li{display:flex;gap:12px;color:var(--ink-2)}
+  ul.ticks li::before{content:"";flex:0 0 22px;height:22px;border-radius:50%;background:var(--mist-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b7fa3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/14px no-repeat;margin-top:2px}
+  ul.ticks b{color:var(--ink)}
+  /* how */
+  .how{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .head{text-align:center;margin-bottom:48px}
+  .head p.sub{margin:0 auto}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .step{background:var(--mist);border-radius:var(--r);padding:30px}
+  .step .n{width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;display:grid;place-items:center;margin-bottom:18px}
+  .step h3{margin:0 0 8px;font-size:1.25rem;letter-spacing:-.01em}
+  .step p{margin:0;color:var(--ink-2)}
+  /* cards */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px}
+  .card .ic{width:44px;height:44px;border-radius:14px;background:var(--mist-2);display:grid;place-items:center;margin-bottom:16px;color:var(--teal)}
+  .card h3{margin:0 0 6px;font-size:1.15rem}
+  .card p{margin:0;color:var(--ink-2);font-size:.98rem}
+  /* faq */
+  .faq{max-width:760px;margin:0 auto}
+  details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 24px;margin-bottom:12px}
+  summary{cursor:pointer;font-weight:600;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--teal);font-size:1.4rem;line-height:1}
+  details[open] summary::after{content:"–"}
+  details p{margin:12px 0 0;color:var(--ink-2)}
+  /* cta */
+  .final{background:var(--dark);color:#e7f6fb;border-radius:40px;padding:72px 40px;text-align:center;position:relative;overflow:hidden}
+  .final::before{content:"";position:absolute;inset:-40% -10% auto auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,216,.35),rgba(0,180,216,0) 70%)}
+  .final h2{color:#fff;position:relative} .final p{color:#a9cddb;max-width:30rem;margin:0 auto 28px;position:relative}
+  .final .btn{position:relative;background:#fff;color:var(--ink)}
+  footer{padding:48px 0 64px;color:var(--muted);font-size:.92rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  footer a{text-decoration:none} footer a:hover{color:var(--teal)}
+  @media(max-width:900px){
+    .nav ul{display:none}
+    .hero .wrap{grid-template-columns:1fr;padding-top:40px}
+    .stage{height:560px}.stage img{width:240px}.stage .a{left:4%}.stage .b{right:4%}
+    .row{grid-template-columns:1fr;gap:36px}.row.flip .shot{order:0}
+    .steps,.grid{grid-template-columns:1fr}
+    section{padding:64px 0}
   }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="nav">
-    <a class="logo" href="#">Atoll</a>
-    <nav><a class="link" href="#how">How it works</a><a class="link" href="#features">Features</a><a class="link" href="mailto:hello@tryatoll.app">Contact</a></nav>
-  </header>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="#"><span class="mark"></span>Atoll</a>
+  <ul><li><a href="#how">How it works</a></li><li><a href="#ring">The ring</a></li><li><a href="#modes">Modes</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <a class="btn primary small" href="mailto:hello@tryatoll.app?subject=Notify%20me%20about%20Atoll">Get notified</a>
+</div></nav>
 
-  <div class="hero">
-    <div>
-      <h1>Lock your phone,<br>on purpose.</h1>
-      <p class="lead">Atoll blocks the apps and websites that pull you in, on a schedule you set. Unlocking takes a deliberate long hold, or an NFC card you already own.</p>
-      <span class="badge">Coming soon to iOS</span>
+<header class="hero"><div class="wrap">
+  <div>
+    <span class="pill"><i></i>Coming soon to iPhone</span>
+    <h1>Focus that <em>holds</em>.</h1>
+    <p class="lead">Atoll blocks the apps and websites that pull you in, on a schedule you set. Unlocking takes a deliberate hold, or a tap of an NFC card you already own.</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:hello@tryatoll.app?subject=Notify%20me%20about%20Atoll">Get notified at launch</a>
+      <a class="btn ghost" href="#how">See how it works</a>
     </div>
-    <img class="phone" src="img/home-unlocked.png" alt="Atoll home screen showing a 24-hour ring and a hold-to-lock button">
+    <p class="note">Built for iPhone. Uses Apple's Screen Time framework.</p>
   </div>
+  <div class="stage">
+    <img class="a" src="img/home-unlocked.png" alt="Atoll home screen in light mode">
+    <img class="b" src="img/home-locked.png" alt="Atoll home screen in dark mode while locked">
+  </div>
+</div></header>
 
-  <section id="how">
-    <h2>How it works</h2>
-    <p class="sub">Three steps, no accounts to manage beyond Sign in with Apple.</p>
-    <div class="steps">
-      <div class="step"><div class="n">1</div><h3>Pick what to block</h3><p>Create modes with the apps and websites you want out of reach. Keep as many modes as you need.</p></div>
-      <div class="step"><div class="n">2</div><h3>Lock now or on a schedule</h3><p>Hold the button to lock right away, or set schedules that lock and unlock automatically.</p></div>
-      <div class="step"><div class="n">3</div><h3>Unlock with intent</h3><p>Keep holding to unlock, or tap a registered NFC card such as a transit card for a bit more friction.</p></div>
-    </div>
-  </section>
+<section class="how" id="how"><div class="wrap">
+  <div class="head"><div class="eyebrow">How it works</div><h2>Set it once. Let it hold.</h2><p class="sub">Three steps, and Atoll does the rest.</p></div>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Choose what to block</h3><p>Build modes from the apps and websites that cost you the most time.</p></div>
+    <div class="step"><div class="n">2</div><h3>Lock now or on a schedule</h3><p>Hold the button to lock right away, or set the days and hours and let it run on its own.</p></div>
+    <div class="step"><div class="n">3</div><h3>Unlock on purpose</h3><p>Keep holding to unlock, or tap a registered NFC card when you want a little more friction.</p></div>
+  </div>
+</div></section>
 
-  <section id="features">
-    <h2>Built for staying put</h2>
-    <p class="sub">The parts of Atoll that do the work.</p>
-    <div class="features">
-      <div class="feat"><h3>24-hour ring</h3><p>See your sleep, locked time and long use on a single ring, so the day is easy to read at a glance.</p></div>
-      <div class="feat"><h3>Apps and websites</h3><p>Block both apps and sites, so a distraction does not just move to the browser.</p></div>
-      <div class="feat"><h3>Multiple modes</h3><p>Switch between modes for study, sleep or focus without rebuilding your block list.</p></div>
-      <div class="feat"><h3>Schedules</h3><p>Lock automatically at set times and let Atoll unlock when the window ends.</p></div>
-      <div class="feat"><h3>NFC cards</h3><p>Register a card you already have. No special hardware to buy.</p></div>
-      <div class="feat"><h3>Stats</h3><p>Weekly, monthly and yearly views of how much time you spent locked.</p></div>
-    </div>
-  </section>
+<section id="ring"><div class="wrap row">
+  <div>
+    <div class="eyebrow">Your day at a glance</div>
+    <h2>One ring for the whole day.</h2>
+    <p class="sub">See when you slept, when you were locked and when you spent a long stretch on your phone, all on a single 24-hour ring.</p>
+    <ul class="ticks">
+      <li><span><b>Locked and unlocked states.</b> The home screen shows how long until the next lock, or how long this session has been running.</span></li>
+      <li><span><b>Hold to lock, hold to unlock.</b> A long press keeps it deliberate, not a reflex.</span></li>
+      <li><span><b>Emergency unlock.</b> A limited number each month for when you really need your phone.</span></li>
+    </ul>
+  </div>
+  <div class="shot"><div class="frame dark"><img src="img/home-locked.png" alt="Locked home screen with 42 minutes into the session" loading="lazy"></div></div>
+</div></section>
 
-  <section>
-    <h2>A look inside</h2>
-    <p class="sub">Light and dark, matching your system.</p>
-    <div class="shots">
-      <figure><img src="img/home-unlocked.png" alt="Home, unlocked" loading="lazy"><figcaption>Home</figcaption></figure>
-      <figure><img src="img/home-locked.png" alt="Home, locked" loading="lazy"><figcaption>Locked</figcaption></figure>
-      <figure><img src="img/modes.png" alt="Modes list" loading="lazy"><figcaption>Modes</figcaption></figure>
-      <figure><img src="img/schedule.png" alt="Schedule editor" loading="lazy"><figcaption>Schedules</figcaption></figure>
-      <figure><img src="img/stats.png" alt="Monthly stats" loading="lazy"><figcaption>Stats</figcaption></figure>
-    </div>
-  </section>
+<section id="modes" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap row flip">
+  <div>
+    <div class="eyebrow">Modes and schedules</div>
+    <h2>A mode for every part of your day.</h2>
+    <p class="sub">Study, sleep, focus. Keep as many modes as you need and switch between them without rebuilding your block list.</p>
+    <ul class="ticks">
+      <li><span><b>Apps and websites.</b> Block both, so a distraction does not just move to the browser.</span></li>
+      <li><span><b>Schedules by day and time.</b> Pick the days and hours, and Atoll locks and releases automatically.</span></li>
+      <li><span><b>Relock delay.</b> If you unlock early, it locks again after the delay you choose.</span></li>
+    </ul>
+  </div>
+  <div class="shot"><div class="frame"><img src="img/modes.png" alt="Modes list with Default, Study, Sleep and Focus" loading="lazy"></div></div>
+</div></section>
 
-  <section>
-    <div class="band">
-      <h2>About Atoll</h2>
-      <p>Atoll is built in Sydney, Australia. To hear when it launches, or if you have a question or feedback, write to <a href="mailto:hello@tryatoll.app" style="color:#8fd8ee">hello@tryatoll.app</a>.</p>
-    </div>
-  </section>
+<section><div class="wrap row">
+  <div>
+    <div class="eyebrow">Stats</div>
+    <h2>See the hours you got back.</h2>
+    <p class="sub">Weekly, monthly and yearly views show your focus time, how often you unlocked and which days you kept your streak.</p>
+    <ul class="ticks">
+      <li><span><b>Focus time and trends.</b> Compare this month with last month.</span></li>
+      <li><span><b>Day-by-day heatmap.</b> Spot the days that go well and the ones that slip.</span></li>
+    </ul>
+  </div>
+  <div class="shot"><div class="frame"><img src="img/stats.png" alt="Monthly stats with focus time and a day heatmap" loading="lazy"></div></div>
+</div></section>
 
-  <footer>
-    <span>© 2026 Atoll</span>
-    <span><a href="mailto:hello@tryatoll.app">hello@tryatoll.app</a></span>
-  </footer>
-</div>
+<section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+  <div class="head"><div class="eyebrow">The details</div><h2>Small things that matter.</h2></div>
+  <div class="grid">
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h4M7 14h2"/></svg></div><h3>NFC cards, no new hardware</h3><p>Register a card you already own, such as a transit card. Atoll does not write anything to it.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Schedules that run themselves</h3><p>Weekday study blocks, a quiet night. Set the days and times once.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9h9"/></svg></div><h3>Light and dark</h3><p>Follows your system appearance, in both the day and the night.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3>Streaks</h3><p>A simple count of the days you kept your focus.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><h3>Strict mode</h3><p>Stops you from simply deleting Atoll to escape a lock you set.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-11a7 7 0 0 1 14 0c0 6.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><h3>Sign in with Apple</h3><p>One tap to sign in, and your modes and history come with you to a new phone.</p></div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <div class="head"><div class="eyebrow">FAQ</div><h2>Questions, answered.</h2></div>
+  <div class="faq">
+    <details><summary>When is Atoll available?</summary><p>Atoll is in development for iPhone. Email <a href="mailto:hello@tryatoll.app">hello@tryatoll.app</a> and we will let you know when it launches.</p></details>
+    <details><summary>Do I need to buy NFC tags?</summary><p>No. You can register an NFC card you already own, such as a transit card. Holding the button to unlock works without any card at all.</p></details>
+    <details><summary>What if I need my phone in an emergency?</summary><p>Atoll has an emergency unlock with a limited number of uses each month, so you are never fully locked out.</p></details>
+    <details><summary>Which apps and sites can it block?</summary><p>You choose them. Atoll uses Apple's Screen Time framework to block the apps you pick, plus websites you list.</p></details>
+    <details><summary>Does it work on Android?</summary><p>Not yet. Atoll is built for iPhone first.</p></details>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="final">
+    <h2>Be the first to try Atoll.</h2>
+    <p>Leave your email with us and we will tell you the day it is on the App Store.</p>
+    <a class="btn" href="mailto:hello@tryatoll.app?subject=Notify%20me%20about%20Atoll">Get notified at launch</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span class="brand"><span class="mark"></span>Atoll</span>
+  <span>© 2026 Atoll · Sydney, Australia</span>
+  <a href="mailto:hello@tryatoll.app">hello@tryatoll.app</a>
+</div></footer>
 </body>
 </html>
