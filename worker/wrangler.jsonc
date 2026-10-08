@@ -1,0 +1,9 @@
+{
+  "name": "atoll-signup",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "kv_namespaces": [
+    { "binding": "SIGNUPS", "id": "7b1bc335fb844ea0b2f07b55edbb4f8f" }
+  ],
+  "vars": { "NOTIFY_TO": "tryatoll@gmail.com" }
+}

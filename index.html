@@ -8,7 +8,15 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Atoll · Focus that holds">
 <meta property="og:description" content="Block distracting apps and websites on a schedule. Unlock on purpose.">
-<meta property="og:image" content="https://tryatoll.app/img/home-unlocked.png">
+<meta property="og:image" content="https://tryatoll.app/og-image.png">
+<meta property="og:url" content="https://tryatoll.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tryatoll.app/og-image.png">
+<link rel="canonical" href="https://tryatoll.app/">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#072f40">
 <style>
   :root {
@@ -34,6 +42,22 @@
   .btn.primary{background:var(--ink);color:#fff;box-shadow:0 10px 24px -10px rgba(7,47,64,.6)}
   .btn.ghost{background:rgba(255,255,255,.7);border-color:var(--line);color:var(--ink)}
   .btn.small{padding:9px 18px;font-size:.9rem}
+  /* notify form */
+  .notify{width:100%;max-width:440px}
+  .notify .row{display:flex;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px;box-shadow:0 10px 24px -14px rgba(7,47,64,.4)}
+  .notify input[type=email]{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:1rem;padding:8px 14px;color:var(--ink);outline:none}
+  .notify .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .notify .btn{white-space:nowrap;cursor:pointer;font-family:inherit}
+  .notify .msg{margin:10px 14px 0;font-size:.88rem;color:var(--muted)}
+  .notify.err .msg{color:#b3261e}
+  .notify.done .row{display:none}
+  .notify.done .msg{margin:0;font-size:1rem;font-weight:600;color:var(--teal)}
+  .notify.busy .btn{opacity:.6;pointer-events:none}
+  .final .notify{margin:0 auto;position:relative}
+  .final .notify .msg{color:#a9cddb;text-align:center}
+  .final .notify.err .msg{color:#ffb4ab}
+  .final .notify.done .msg{color:#fff}
+  .final .notify .btn.primary{background:var(--teal-2);color:var(--dark);box-shadow:none}
   /* hero */
   .hero{position:relative;overflow:hidden;background:
     radial-gradient(1100px 520px at 78% -8%,#bfeaf6 0%,rgba(191,234,246,0) 60%),
@@ -110,7 +134,7 @@
 <nav class="nav"><div class="wrap">
   <a class="brand" href="#"><span class="mark"></span>Atoll</a>
   <ul><li><a href="#how">How it works</a></li><li><a href="#ring">The ring</a></li><li><a href="#modes">Modes</a></li><li><a href="#faq">FAQ</a></li></ul>
-  <a class="btn primary small" href="mailto:hello@tryatoll.app?subject=Notify%20me%20about%20Atoll">Get notified</a>
+  <a class="btn primary small" href="#notify">Get notified</a>
 </div></nav>
 
 <header class="hero"><div class="wrap">
@@ -119,14 +143,17 @@
     <h1>Focus that <em>holds</em>.</h1>
     <p class="lead">Atoll blocks the apps and websites that pull you in, on a schedule you set. Unlocking takes a deliberate hold, or a tap of an NFC card you already own.</p>
     <div class="cta">
-      <a class="btn primary" href="mailto:hello@tryatoll.app?subject=Notify%20me%20about%20Atoll">Get notified at launch</a>
+      <form class="notify" novalidate>
+        <div class="row"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email" required><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn primary" type="submit">Get notified</button></div>
+        <p class="msg" role="status" aria-live="polite">We will only email you about the launch.</p>
+      </form>
       <a class="btn ghost" href="#how">See how it works</a>
     </div>
     <p class="note">Built for iPhone. Uses Apple's Screen Time framework.</p>
   </div>
   <div class="stage">
-    <img class="a" src="img/home-unlocked.png" alt="Atoll home screen in light mode">
-    <img class="b" src="img/home-locked.png" alt="Atoll home screen in dark mode while locked">
+    <img class="a" src="img/home-unlocked.webp" alt="Atoll home screen in light mode">
+    <img class="b" src="img/home-locked.webp" alt="Atoll home screen in dark mode while locked">
   </div>
 </div></header>
 
@@ -150,7 +177,7 @@
       <li><span><b>Emergency unlock.</b> A limited number each month for when you really need your phone.</span></li>
     </ul>
   </div>
-  <div class="shot"><div class="frame dark"><img src="img/home-locked.png" alt="Locked home screen with 42 minutes into the session" loading="lazy"></div></div>
+  <div class="shot"><div class="frame dark"><img src="img/home-locked.webp" alt="Locked home screen with 42 minutes into the session" loading="lazy"></div></div>
 </div></section>
 
 <section id="modes" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap row flip">
@@ -164,7 +191,7 @@
       <li><span><b>Relock delay.</b> If you unlock early, it locks again after the delay you choose.</span></li>
     </ul>
   </div>
-  <div class="shot"><div class="frame"><img src="img/modes.png" alt="Modes list with Default, Study, Sleep and Focus" loading="lazy"></div></div>
+  <div class="shot"><div class="frame"><img src="img/modes.webp" alt="Modes list with Default, Study, Sleep and Focus" loading="lazy"></div></div>
 </div></section>
 
 <section><div class="wrap row">
@@ -177,7 +204,7 @@
       <li><span><b>Day-by-day heatmap.</b> Spot the days that go well and the ones that slip.</span></li>
     </ul>
   </div>
-  <div class="shot"><div class="frame"><img src="img/stats.png" alt="Monthly stats with focus time and a day heatmap" loading="lazy"></div></div>
+  <div class="shot"><div class="frame"><img src="img/stats.webp" alt="Monthly stats with focus time and a day heatmap" loading="lazy"></div></div>
 </div></section>
 
 <section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
@@ -195,7 +222,7 @@
 <section id="faq"><div class="wrap">
   <div class="head"><div class="eyebrow">FAQ</div><h2>Questions, answered.</h2></div>
   <div class="faq">
-    <details><summary>When is Atoll available?</summary><p>Atoll is in development for iPhone. Email <a href="mailto:hello@tryatoll.app">hello@tryatoll.app</a> and we will let you know when it launches.</p></details>
+    <details><summary>When is Atoll available?</summary><p>Atoll is in development for iPhone. Leave your email above and we will let you know when it launches. You can also reach us at <a href="mailto:hello@tryatoll.app">hello@tryatoll.app</a>.</p></details>
     <details><summary>Do I need to buy NFC tags?</summary><p>No. You can register an NFC card you already own, such as a transit card. Holding the button to unlock works without any card at all.</p></details>
     <details><summary>What if I need my phone in an emergency?</summary><p>Atoll has an emergency unlock with a limited number of uses each month, so you are never fully locked out.</p></details>
     <details><summary>Which apps and sites can it block?</summary><p>You choose them. Atoll uses Apple's Screen Time framework to block the apps you pick, plus websites you list.</p></details>
@@ -207,7 +234,11 @@
   <div class="final">
     <h2>Be the first to try Atoll.</h2>
     <p>Leave your email with us and we will tell you the day it is on the App Store.</p>
-    <a class="btn" href="mailto:hello@tryatoll.app?subject=Notify%20me%20about%20Atoll">Get notified at launch</a>
+    <div id="notify"></div>
+    <form class="notify on-dark" novalidate>
+        <div class="row"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email" required><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn primary" type="submit">Get notified</button></div>
+        <p class="msg" role="status" aria-live="polite">We will only email you about the launch.</p>
+      </form>
   </div>
 </div></section>
 
@@ -216,5 +247,24 @@
   <span>© 2026 Atoll · Sydney, Australia</span>
   <a href="mailto:hello@tryatoll.app">hello@tryatoll.app</a>
 </div></footer>
+<script>
+(function(){
+  var API="https://atoll-signup.star7357.workers.dev";
+  document.querySelectorAll("form.notify").forEach(function(f){
+    var msg=f.querySelector(".msg"), idle=msg.textContent;
+    f.addEventListener("submit",function(e){
+      e.preventDefault();
+      var email=f.email.value.trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){f.classList.add("err");msg.textContent="Please enter a valid email address.";return}
+      f.classList.remove("err");f.classList.add("busy");
+      fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,website:f.website.value})})
+        .then(function(r){if(!r.ok)throw 0;f.classList.add("done");msg.textContent="Thanks! We will email you when Atoll launches."})
+        .catch(function(){f.classList.add("err");msg.textContent="Something went wrong. Please try again, or email hello@tryatoll.app."})
+        .then(function(){f.classList.remove("busy")});
+    });
+    f.email.addEventListener("input",function(){if(f.classList.contains("err")){f.classList.remove("err");msg.textContent=idle}});
+  });
+})();
+</script>
 </body>
 </html>
